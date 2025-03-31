@@ -112,6 +112,22 @@ ifeq ($(CONFIG_TOUCH_FOCALTECH), y)
 	obj-$(CONFIG_MSM_TOUCH) += focaltech_fts.o
 endif
 
+ifeq ($(CONFIG_TOUCHSCREEN_LXS), y)
+	LINUX_INC += -include $(TOUCH_ROOT)/lxs_ts/lxs_ts_hal_prd.h
+	LINUX_INC += -include $(TOUCH_ROOT)/lxs_ts/lxs_ts.h
+
+	lxs_touchscreen-y := \
+		./lxs_ts/lxs_ts.o \
+		./lxs_ts/lxs_ts_fn.o \
+		./lxs_ts/lxs_ts_hal.o \
+		./lxs_ts/lxs_ts_hal_fw.o \
+		./lxs_ts/lxs_ts_hal_prd.o \
+		./lxs_ts/lxs_ts_sysfs.o \
+		./lxs_ts/touch_sw82907.o
+
+	obj-$(CONFIG_MSM_TOUCH) += lxs_touchscreen.o
+endif
+
 ifeq ($(CONFIG_TOUCHSCREEN_NT36XXX_I2C), y)
 	LINUX_INC += -include $(TOUCH_ROOT)/nt36xxx/nt36xxx.h
 	LINUX_INC += -include $(TOUCH_ROOT)/nt36xxx/nt36xxx_mem_map.h
