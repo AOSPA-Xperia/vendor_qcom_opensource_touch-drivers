@@ -164,6 +164,21 @@ else ifeq ($(TARGET_BOARD_PLATFORM), pineapple)
 
 else ifeq ($(TARGET_BOARD_PLATFORM), kalama)
 
+       ifneq (, $(filter $(word 2,$(subst _, ,$(TARGET_PRODUCT))), pdx234 pdx237))
+
+              ###########################################################
+              include $(CLEAR_VARS)
+              LOCAL_SRC_FILES   := $(wildcard $(LOCAL_PATH)/**/*) $(wildcard $(LOCAL_PATH)/*)
+              LOCAL_MODULE              := lxs_touchscreen.ko
+              LOCAL_MODULE_KBUILD_NAME  := lxs_touchscreen.ko
+              LOCAL_MODULE_TAGS         := optional
+              #LOCAL_MODULE_DEBUG_ENABLE := true
+              LOCAL_MODULE_PATH         := $(KERNEL_MODULES_OUT)
+              include $(DLKM_DIR)/Build_external_kernelmodule.mk
+              ###########################################################
+
+       else
+
        ###########################################################
        include $(CLEAR_VARS)
        LOCAL_SRC_FILES   := $(wildcard $(LOCAL_PATH)/**/*) $(wildcard $(LOCAL_PATH)/*)
@@ -196,6 +211,8 @@ else ifeq ($(TARGET_BOARD_PLATFORM), kalama)
        LOCAL_MODULE_PATH         := $(KERNEL_MODULES_OUT)
        include $(DLKM_DIR)/Build_external_kernelmodule.mk
        ###########################################################
+
+       endif
 
 else ifeq ($(TARGET_BOARD_PLATFORM), blair)
 

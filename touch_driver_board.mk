@@ -21,9 +21,15 @@ ifeq ($(TOUCH_DLKM_ENABLE),  true)
                                         $(KERNEL_MODULES_OUT)/goodix_ts.ko \
                                         $(KERNEL_MODULES_OUT)/atmel_mxt_ts.ko
                         else ifeq ($(TARGET_BOARD_PLATFORM), kalama)
-                                BOARD_VENDOR_KERNEL_MODULES += $(KERNEL_MODULES_OUT)/nt36xxx-i2c.ko \
-                                        $(KERNEL_MODULES_OUT)/goodix_ts.ko \
-                                        $(KERNEL_MODULES_OUT)/atmel_mxt_ts.ko
+                                ifneq (, $(filter $(word 2,$(subst _, ,$(TARGET_PRODUCT))), pdx234 pdx237))
+                                        BOARD_VENDOR_KERNEL_MODULES += $(KERNEL_MODULES_OUT)/lxs_touchscreen.ko
+                                        BOARD_VENDOR_RAMDISK_KERNEL_MODULES += $(KERNEL_MODULES_OUT)/lxs_touchscreen.ko
+                                        BOARD_VENDOR_RAMDISK_RECOVERY_KERNEL_MODULES_LOAD += $(KERNEL_MODULES_OUT)/lxs_touchscreen.ko
+                                else
+                                        BOARD_VENDOR_KERNEL_MODULES += $(KERNEL_MODULES_OUT)/nt36xxx-i2c.ko \
+                                                $(KERNEL_MODULES_OUT)/goodix_ts.ko \
+                                                $(KERNEL_MODULES_OUT)/atmel_mxt_ts.ko
+                                endif
                         else ifeq ($(TARGET_BOARD_PLATFORM), blair)
                                 BOARD_VENDOR_KERNEL_MODULES += $(KERNEL_MODULES_OUT)/focaltech_fts.ko \
                                         $(KERNEL_MODULES_OUT)/nt36xxx-i2c.ko \

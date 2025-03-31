@@ -7,8 +7,16 @@ ifeq ($(CONFIG_ARCH_WAIPIO), y)
 endif
 
 ifeq ($(CONFIG_ARCH_KALAMA), y)
-	include $(TOUCH_ROOT)/config/gki_kalamatouch.conf
-	LINUX_INC += -include $(TOUCH_ROOT)/config/gki_kalamatouchconf.h
+	ifeq ($(CONFIG_MACH_SONY_PDX234), y)
+		include $(TOUCH_ROOT)/config/gki_pdx234touch.conf
+		LINUX_INC += -include $(TOUCH_ROOT)/config/gki_pdx234touchconf.h
+	else ifeq ($(CONFIG_MACH_SONY_PDX237), y)
+		include $(TOUCH_ROOT)/config/gki_pdx237touch.conf
+		LINUX_INC += -include $(TOUCH_ROOT)/config/gki_pdx237touchconf.h
+	else
+		include $(TOUCH_ROOT)/config/gki_kalamatouch.conf
+		LINUX_INC += -include $(TOUCH_ROOT)/config/gki_kalamatouchconf.h
+	endif
 endif
 
 ifeq ($(CONFIG_ARCH_KHAJE), y)
